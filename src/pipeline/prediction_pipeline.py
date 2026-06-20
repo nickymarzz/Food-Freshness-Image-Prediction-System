@@ -42,16 +42,13 @@ class PredictionPipeline:
         img_array = np.expand_dims(img_array, axis=0)
         return img_array, img
 
- 
     def predict(self, img):
-   
         cat_img_array, pil_img = self._preprocess_image(img, CATEGORY_IMG_SIZE, normalize=True)
         cat_pred = self.category_model.predict(cat_img_array)
         cat_idx = int(np.argmax(cat_pred))
         cat_label = self.category_labels[cat_idx]
         cat_score = float(np.max(cat_pred))
 
-      
         fresh_img_array, _ = self._preprocess_image(img, FRESHNESS_IMG_SIZE, normalize=True)
         fresh_pred = self.freshness_model.predict(fresh_img_array)
         fresh_idx = int(np.argmax(fresh_pred))

@@ -1,22 +1,17 @@
-import os
 import logging
 from pathlib import Path
 from src.config import Config
-from src.utils import raw_img_dir,save_classification_report, save_confusion_matrix, save_error_analysis, save_optimization_comparison, save_roc_curve
+from src.utils import save_classification_report, save_confusion_matrix, save_error_analysis, save_optimization_comparison, save_roc_curve
 import tensorflow as tf
 import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-from sklearn.metrics import classification_report, confusion_matrix,roc_curve, auc
 
 
 class ModelEvaluation:
     def __init__(self, config: Config = None):
         self.config = config or Config()
-        self.processed_data_dir = Path(config.PROCESSED_DATA_DIR)
-        self.results_dir = Path(config.RESULTS_DIR)      
-        self.model_dir = Path(config.MODEL_DIR)         
+        self.processed_data_dir = Path(self.config.PROCESSED_DATA_DIR)
+        self.results_dir = Path(self.config.RESULTS_DIR)
+        self.model_dir = Path(self.config.MODEL_DIR)         
         self.logger = self._setup_logger()
 
     def _setup_logger(self):
@@ -68,7 +63,6 @@ class ModelEvaluation:
         save_optimization_comparison(results_dict, self.results_dir / "optimization_comparison.csv")
 
         self.logger.info("Model Evaluation complete.")
-
 
 
 if __name__ == "__main__":

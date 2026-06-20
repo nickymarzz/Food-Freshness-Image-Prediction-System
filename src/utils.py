@@ -1,15 +1,12 @@
-import os 
-from src.config import Config
 from pathlib import Path
 import matplotlib.pyplot as plt
 from PIL import Image
 import random
 import cv2
-import numpy as np 
+import numpy as np
 import pandas as pd
 import seaborn as sns
-from sklearn.metrics import classification_report, confusion_matrix,roc_curve, auc
-
+from sklearn.metrics import classification_report, confusion_matrix, roc_curve, auc
 
 
 def raw_img_dir(raw_data_dir, category_names):
@@ -32,8 +29,6 @@ def raw_img_dir(raw_data_dir, category_names):
                         if file_path.is_file() and file_path.suffix.lower() in image_extensions:
                             image_paths[label].append(file_path)
     return image_paths
-
-
 
 
 def plot_class_distribution(class_counts, title="Class Distribution"):

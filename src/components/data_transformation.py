@@ -1,5 +1,3 @@
-import os
-import json
 import logging
 from pathlib import Path
 from src.config import Config
@@ -13,8 +11,8 @@ class DataTransformation:
     def __init__(self, config: Config = None):
         
         self.config = config or Config()
-        self.raw_data_dir = Path(config.RAW_DATA_DIR)
-        self.processed_data_dir = Path(config.PROCESSED_DATA_DIR)
+        self.raw_data_dir = Path(self.config.RAW_DATA_DIR)
+        self.processed_data_dir = Path(self.config.PROCESSED_DATA_DIR)
         self.img_size = (224, 224)  
         self.logger = self._setup_logger()
     

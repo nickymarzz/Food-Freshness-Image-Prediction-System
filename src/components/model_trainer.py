@@ -1,18 +1,16 @@
 import logging
 from pathlib import Path
 from src.config import Config
-import tensorflow as tf 
+import tensorflow as tf
 from keras.callbacks import EarlyStopping
 import json
-
-
 
 
 class ModelTrainer:
     def __init__(self, config: Config = None):
         
         self.config = config or Config()
-        self.processed_data_dir = Path(config.PROCESSED_DATA_DIR)
+        self.processed_data_dir = Path(self.config.PROCESSED_DATA_DIR)
         self.logger = self._setup_logger()
     
     def _setup_logger(self):
@@ -107,7 +105,7 @@ class ModelTrainer:
 
     def model_trainer(self):
     
-        train_ds, val_ds, test_ds = self.load_data()
+        train_ds, val_ds, _ = self.load_data()
     
         model = self.build_model(num_classes=2)
         
@@ -119,4 +117,4 @@ class ModelTrainer:
 
 if __name__ == "__main__":
     mt = ModelTrainer()
-    mt.model_trainer()
+    mt.model_trainer()

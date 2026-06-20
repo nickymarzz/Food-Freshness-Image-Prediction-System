@@ -6,14 +6,13 @@ from src.config import Config
 from src.utils import raw_img_dir
 from PIL import Image
 from datetime import datetime
-from collections import defaultdict
 
 
 class DataIngestion:
     def __init__(self, config: Config = None):
         self.config = config or Config()
-        self.raw_data_dir = Path(config.RAW_DATA_DIR)
-        self.metadata_file = Path(config.METADATA_FILE)
+        self.raw_data_dir = Path(self.config.RAW_DATA_DIR)
+        self.metadata_file = Path(self.config.METADATA_FILE)
         self.logger = self._setup_logger()
     
     def _setup_logger(self):

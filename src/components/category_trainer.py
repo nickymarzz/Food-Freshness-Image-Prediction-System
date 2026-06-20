@@ -1,4 +1,3 @@
-import os
 import logging
 from pathlib import Path
 from src.config import Config
@@ -6,15 +5,15 @@ import tensorflow as tf
 from keras.callbacks import EarlyStopping
 from tensorflow.keras import layers
 from tensorflow.keras.callbacks import ReduceLROnPlateau
-import json
 from PIL import Image
 import shutil
-import random 
+import random
+import json
 
 class CategoryModelTrainer:
     def __init__(self, config: Config = None):
         self.config = config or Config()
-        self.raw_data_dir = Path(config.RAW_DATA_DIR)
+        self.raw_data_dir = Path(self.config.RAW_DATA_DIR)
         self.logger = self._setup_logger()
 
     def _setup_logger(self):
@@ -198,7 +197,7 @@ class CategoryModelTrainer:
         self.logger.info(f"Category labels saved to {save_path.resolve()}")
 
     def model_trainer(self):
-        train_ds, val_ds, test_ds = self.load_data()
+        train_ds, val_ds, _ = self.load_data()
         categories = Config.FRUIT_NAMES + Config.VEGETABLE_NAMES
         num_classes = len(categories)
         
