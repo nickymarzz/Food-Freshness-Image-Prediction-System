@@ -6,21 +6,27 @@ project_name = 'Image-Based-Food-Freshness-Prediction-System'
 
 
 list_of_paths = [
- 
+
+    "src/__init__.py",
+
     "src/components/__init__.py",
     "src/components/data_ingestion.py",
     "src/components/data_transformation.py",
     "src/components/model_trainer.py",
-    "src/components/category_trainer.py"
+    "src/components/category_trainer.py",
     "src/components/model_evaluation.py",
-  
+    "src/components/mongodb_client.py",
+
     "src/pipeline/__init__.py",
     "src/pipeline/training_pipeline.py",
     "src/pipeline/prediction_pipeline.py",
 
+    "src/api/__init__.py",
     "src/api/main.py",
 
-    "src/app/app.py"
+    "src/app/__init__.py",
+    "src/app/app.py",
+    "src/app/storage_tips.py",
 
     "src/config.py",
     "src/utils.py",

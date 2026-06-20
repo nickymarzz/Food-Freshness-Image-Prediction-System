@@ -1,4 +1,4 @@
-import os 
+import os
 
 
 class Config:
@@ -11,9 +11,9 @@ class Config:
     RESULTS_DIR = os.path.join(PROJECT_ROOT, 'artifacts', 'results')
 
     METADATA_FILE = os.path.join(PROJECT_ROOT, 'artifacts', 'data', 'metadata.json')
-    CATEGORY_NAMES =  ['Fruits','Vegetables']
+    CATEGORY_NAMES = ['Fruits', 'Vegetables']
     FRUIT_NAMES = ['Apple', 'Banana', 'Mango', 'Orange', 'Strawberry']
-    VEGETABLE_NAMES = ['Bellpepper', 'Carrot', 'Cucumber', 'Potato', 'Tomato' ]
+    VEGETABLE_NAMES = ['Bellpepper', 'Carrot', 'Cucumber', 'Potato', 'Tomato']
     CLASS_NAMES = ['Fresh', 'Rotten']
 
     # MongoDB Configuration

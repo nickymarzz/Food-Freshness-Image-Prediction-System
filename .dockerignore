@@ -4,4 +4,9 @@ venv/
 __pycache__/
 *.pyc
 .env
+
+# Don't copy raw/processed training data or notebook files into the image
 notebooks/
+artifacts/data/
+artifacts/results/
+artifacts/logs/

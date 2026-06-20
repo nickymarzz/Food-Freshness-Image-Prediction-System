@@ -14,7 +14,7 @@ from sklearn.metrics import classification_report, confusion_matrix,roc_curve, a
 
 def raw_img_dir(raw_data_dir, category_names):
     image_paths = {'Fresh': [], 'Rotten': []}
-    image_extensions = ['*.jpg', '*.jpeg', '*.png', '*.bmp', '*.tiff']
+    image_extensions = {'.jpg', '.jpeg', '.png', '.bmp', '.tiff'}
 
     for category in category_names:
         category_path = Path(raw_data_dir) / category
@@ -28,9 +28,9 @@ def raw_img_dir(raw_data_dir, category_names):
                     continue
                 label = freshness_folder.name.strip().capitalize()  
                 if label in image_paths:
-                    for ext in image_extensions:
-                        image_paths[label].extend(freshness_folder.glob(ext))
-                        image_paths[label].extend(freshness_folder.glob(ext.upper()))
+                    for file_path in freshness_folder.iterdir():
+                        if file_path.is_file() and file_path.suffix.lower() in image_extensions:
+                            image_paths[label].append(file_path)
     return image_paths
 
 
@@ -170,7 +170,7 @@ def save_error_analysis(test_ds, y_true, y_pred, class_names, save_path, n_sampl
     plt.figure(figsize=(10, 10))
     for n, img in enumerate(images):
         plt.subplot(3, 3, n+1)
-        plt.imshow(img.astype("uint8"))
+        plt.imshow((img * 255.0).astype("uint8"))
         plt.title(f"True: {class_names[y_true[wrong_idx[n]]]}, Pred: {class_names[y_pred[wrong_idx[n]]]}")
         plt.axis("off")
     plt.tight_layout()
@@ -180,7 +180,3 @@ def save_error_analysis(test_ds, y_true, y_pred, class_names, save_path, n_sampl
 def save_optimization_comparison(results_dict, save_path):
     df = pd.DataFrame(results_dict)
     df.to_csv(save_path, index=False)
-
-
-
-

@@ -12,8 +12,8 @@ from sklearn.metrics import classification_report, confusion_matrix,roc_curve, a
 
 
 class ModelEvaluation:
-    def __init__(self, config: Config = Config()):
-        self.config = config
+    def __init__(self, config: Config = None):
+        self.config = config or Config()
         self.processed_data_dir = Path(config.PROCESSED_DATA_DIR)
         self.results_dir = Path(config.RESULTS_DIR)      
         self.model_dir = Path(config.MODEL_DIR)         

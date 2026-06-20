@@ -6,6 +6,7 @@ tensorflow
 opencv-python
 fastapi
 uvicorn
+python-multipart
 python-dotenv
 Pillow
 scikit-learn

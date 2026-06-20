@@ -10,9 +10,9 @@ from PIL import Image
 
 
 class DataTransformation:
-    def __init__(self, config: Config = Config()):
+    def __init__(self, config: Config = None):
         
-        self.config = config
+        self.config = config or Config()
         self.raw_data_dir = Path(config.RAW_DATA_DIR)
         self.processed_data_dir = Path(config.PROCESSED_DATA_DIR)
         self.img_size = (224, 224)  
@@ -29,7 +29,7 @@ class DataTransformation:
         return logger
     
 
-    def train_test_split(self,image_paths_dict, train_ratio=0.7, val_ratio=0.15, test_ratio=0.15):
+    def train_test_split(self, image_paths_dict, train_ratio=0.7, val_ratio=0.15, test_ratio=0.15):
         splits = {'train': [], 'val': [], 'test': []}
         for cls, paths in image_paths_dict.items():
             paths = list(paths)  

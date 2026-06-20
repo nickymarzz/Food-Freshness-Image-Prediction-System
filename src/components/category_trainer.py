@@ -12,8 +12,8 @@ import shutil
 import random 
 
 class CategoryModelTrainer:
-    def __init__(self, config: Config = Config()):
-        self.config = config
+    def __init__(self, config: Config = None):
+        self.config = config or Config()
         self.raw_data_dir = Path(config.RAW_DATA_DIR)
         self.logger = self._setup_logger()
 
@@ -31,12 +31,12 @@ class CategoryModelTrainer:
         try:
             img = Image.open(path)
             img.save(path, icc_profile=None)
-        except:
+        except Exception:
             pass
 
     def get_category_image_dir(self, train_split=0.7, val_split=0.15, test_split=0.15):
        
-        base_output = Path("artifacts/data/category")
+        base_output = Path(Config.DATA_DIR) / "category"
         train_dir = base_output / "train"
         val_dir = base_output / "val"
         test_dir = base_output / "test"
@@ -171,7 +171,7 @@ class CategoryModelTrainer:
         history = model.fit(
             train_ds,
             validation_data=val_ds,
-            epochs=30,
+            epochs=epochs,
             callbacks=[early_stopping, reduce_lr]
         )
         return history

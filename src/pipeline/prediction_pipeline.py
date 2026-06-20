@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
@@ -11,8 +10,6 @@ CATEGORY_MODEL_PATH = Path(Config.MODEL_DIR) / "category_classifier.keras"
 FRESHNESS_MODEL_PATH = Path(Config.MODEL_DIR) / "mobilenetv2_baseline.keras"
 
 CATEGORY_LABELS_PATH = Path(Config.MODEL_DIR) / "category_labels.json"
-with open(CATEGORY_LABELS_PATH, "r") as f:
-    CATEGORY_LABELS = json.load(f)
 
 FRESHNESS_LABELS = ["Fresh", "Rotten"]
 
@@ -23,7 +20,8 @@ class PredictionPipeline:
     def __init__(self):
         self.category_model = tf.keras.models.load_model(CATEGORY_MODEL_PATH)
         self.freshness_model = tf.keras.models.load_model(FRESHNESS_MODEL_PATH)
-        self.category_labels = CATEGORY_LABELS
+        with open(CATEGORY_LABELS_PATH, "r") as f:
+            self.category_labels = json.load(f)
         self.freshness_labels = FRESHNESS_LABELS
 
     def _preprocess_image(self, img, target_size, normalize=True):
@@ -67,13 +65,21 @@ class PredictionPipeline:
         }
 
     def annotate(self, img, result, font_size=28):
-        pil_img = result["pil_img"]
+        if isinstance(img, (str, Path)):
+            pil_img = Image.open(str(img)).convert("RGB")
+        elif isinstance(img, np.ndarray):
+            pil_img = Image.fromarray(img.astype("uint8")).convert("RGB")
+        elif isinstance(img, Image.Image):
+            pil_img = img.copy()
+        else:
+            pil_img = result["pil_img"].copy()
+            
         draw = ImageDraw.Draw(pil_img)
         text = f"{result['category']['label']} ({result['category']['score']:.2f}) | " \
                f"{result['freshness']['label']} ({result['freshness']['score']:.2f})"
         try:
             font = ImageFont.truetype("arial.ttf", font_size)
-        except:
+        except Exception:
             font = ImageFont.load_default()
         draw.rectangle([0, 0, pil_img.width, font_size+8], fill=(0,0,0,160))
         draw.text((5, 2), text, fill=(255, 255, 255), font=font)

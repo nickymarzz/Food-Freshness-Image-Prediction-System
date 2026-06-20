@@ -10,8 +10,8 @@ from collections import defaultdict
 
 
 class DataIngestion:
-    def __init__(self, config: Config = Config()):
-        self.config = config
+    def __init__(self, config: Config = None):
+        self.config = config or Config()
         self.raw_data_dir = Path(config.RAW_DATA_DIR)
         self.metadata_file = Path(config.METADATA_FILE)
         self.logger = self._setup_logger()

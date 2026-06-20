@@ -1,5 +1,5 @@
 import pymongo
-from datetime import datetime
+from datetime import datetime, timezone
 from src.config import Config
 
 class MongoDBClient:
@@ -28,7 +28,7 @@ class MongoDBClient:
             return None
         
         record = {
-            "timestamp": datetime.utcnow(),
+            "timestamp": datetime.now(timezone.utc),
             "category": prediction_data.get("category", {}).get("label"),
             "category_score": float(prediction_data.get("category", {}).get("score", 0.0)),
             "freshness": prediction_data.get("freshness", {}).get("label"),
