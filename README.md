@@ -1,31 +1,14 @@
-![Image](assets/Food%20Freshness%20Detection.jpg)
-
-![Python version](https://img.shields.io/badge/Python%20version-3.11-lightgrey)
-![GitHub last commit](https://img.shields.io/github/last-commit/samithcsachi/Image-Based-Food-Freshness-Prediction-System)
-![GitHub repo size](https://img.shields.io/github/repo-size/samithcsachi/Image-Based-Food-Freshness-Prediction-System)
-![License](https://img.shields.io/badge/License-MIT-green)
-[![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
-
-Badge [source](https://shields.io/)
-
 # Image-Based-Food-Freshness-Prediction-System
 
 The Image-Based Food Freshness Prediction System is an image classification project designed to classify fruits and vegetables and assess their freshness using a convolutional neural network (CNN) model built with TensorFlow. The application provides a web interface for users to upload a picture or use a webcam to capture an image, so it can predict the name of the fruit or vegetable and whether it is Fresh or Rotten. Apple, Banana, Mango, Orange, Strawberry are the fruits the app can predict, and Bellpepper, Carrot, Cucumber, Potato, Tomato are the Vegetables the app can predict.
 
-Hugging Face Spaces Gradio App link : [https://huggingface.co/spaces/samithcs/Image-Based-Food-Freshness-Prediction-System](https://huggingface.co/spaces/samithcs/Image-Based-Food-Freshness-Prediction-System)
-
-Hugging Face Models link :
-
-- [https://huggingface.co/samithcs/Classifier_Fruits_Vegetables](https://huggingface.co/samithcs/Classifier_Fruits_Vegetables)
-- [https://huggingface.co/samithcs/Category_Classifier](https://huggingface.co/samithcs/Category_Classifier)
-
 ## Authors
 
-- [Samith Chimminiyan](https://www.github.com/samithcsachi)
+- [nickymarzz](https://github.com/nickymarzz)
 
 ## Table of Contents
 
-- [Authors](#Authors)
+- [Authors](#authors)
 - [Table of Contents](#table-of-contents)
 - [Problem Statement](#problem-statement)
 - [Tech Stack](#tech-stack)
@@ -61,10 +44,6 @@ Data Source Link : - [https://www.kaggle.com/datasets/muhriddinmuxiddinov/fruits
 - This dataset contains two folders: Fruits (5997 images for 10 classes) and Vegetables (6003 images for 10 classes) each of the above folders contains subfolders for different fruits and vegetables wherein the images for respective food items are present
 
 ## Quick glance at the results
-
-![Demo](assets/Food%20Freshness%20Detection.gif)
-
-![HFDemo](assets/Hugging%20Face%20App.jpg)
 
 ![Confusion-Matrix-Category](assets/category_confusion_matrix.png)
 
@@ -163,13 +142,13 @@ git init
 Clone the project
 
 ```bash
-git clone https://github.com/samithcsachi/Image-Based-Food-Freshness-Prediction-System.git
+git clone https://github.com/nickymarzz/Food-Freshness-Image-Prediction-System.git
 ```
 
 Change the Directory
 
 ```bash
-cd E:/Image-Based-Food-Freshness-Prediction-System
+cd Food-Freshness-Image-Prediction-System
 
 ```
 
@@ -206,7 +185,7 @@ python -m src.app.app
 
 ## Explore the notebook
 
-GitHub : [https://github.com/samithcsachi/Image-Based-Food-Freshness-Prediction-System](https://github.com/samithcsachi/Image-Based-Food-Freshness-Prediction-System)
+GitHub : [https://github.com/nickymarzz/Food-Freshness-Image-Prediction-System](https://github.com/nickymarzz/Food-Freshness-Image-Prediction-System)
 
 Kaggle : [https://www.kaggle.com/datasets/muhriddinmuxiddinov/fruits-and-vegetables-dataset](https://www.kaggle.com/datasets/muhriddinmuxiddinov/fruits-and-vegetables-dataset)
 
@@ -218,7 +197,7 @@ Pull requests are welcome! For major changes, please open an issue first to disc
 
 MIT License
 
-Copyright (c) 2025 Samith Chimminiyan
+Copyright (c) 2026 nickymarzz
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -242,8 +221,6 @@ Learn more about [MIT](https://choosealicense.com/licenses/mit/) license
 
 ## Contact
 
-If you have any questions, suggestions, or collaborations in data science, feel free to reach out:
+If you have any questions, suggestions, or collaborations, feel free to reach out:
 
-- 📧 Email: [samith.sachi@gmail.com](mailto:samith.sachi@gmail.com)
-- 🔗 LinkedIn: [www.linkedin.com/in/samithchimminiyan](https://www.linkedin.com/in/samithchimminiyan)
-- 🌐 Website: [https://samithcsachi.github.io/](https://samithcsachi.github.io/)
+- 🔗 GitHub: [nickymarzz](https://github.com/nickymarzz)
