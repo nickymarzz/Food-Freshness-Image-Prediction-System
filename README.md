@@ -249,7 +249,6 @@ Automated `.bat` scripts are provided in the [`scripts/`](scripts/) directory fo
 | **[`scripts/start_training.bat`](scripts/start_training.bat)** | Executes the reproducible 6-stage training pipeline | Terminal execution |
 | **[`scripts/docker_setup.bat`](scripts/docker_setup.bat)** | Builds Docker image and starts container on port 7860 | `http://localhost:7860` |
 
-
 ---
 
 ## 7. Pipeline Training & Reproducibility
@@ -259,10 +258,10 @@ To re-execute the end-to-end training and evaluation pipeline on raw data:
 ```bash
 python -m src.pipeline.training_pipeline
 ```
+
 *(Or simply execute [`scripts/start_training.bat`](scripts/start_training.bat) on Windows)*
 
 This automatically runs:
-
 
 1. `DataIngestion`: Integrity verification and dataset schema validation.
 2. `DataTransformation`: Seeded stratified splitting and 224x224 RGB standardization.
