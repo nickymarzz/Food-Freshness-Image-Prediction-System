@@ -39,6 +39,7 @@ An end-to-end computer vision pipeline and MLOps architecture designed to identi
 Post-harvest food waste constitutes a massive global challenge, resulting in substantial economic losses and greenhouse gas emissions across distribution logistics. Manual organoleptic food inspection is labor-intensive, subjective, and prone to significant observer bias.
 
 This research formulates produce evaluation as a joint multi-stage deep vision problem:
+
 1. **Botanical Taxonomy Identification:** Given an RGB input $X \in \mathbb{R}^{224 \times 224 \times 3}$, predict class label $y_{\text{cat}} \in \{1, \dots, K\}$ where $K = 10$ (Apple, Banana, Mango, Orange, Strawberry, Bellpepper, Carrot, Cucumber, Potato, Tomato).
 2. **Freshness State Assessment:** Predict binary spoilage state $y_{\text{fresh}} \in \{\text{Fresh}, \text{Rotten}\}$ parameterized by posterior probability $P(y_{\text{fresh}} = \text{Fresh} \mid X)$.
 
@@ -93,6 +94,7 @@ The end-to-end framework implements clean MLOps architectural principles, separa
 ## 3. Dataset Description & Partitioning
 
 The models were trained and benchmarked on the comprehensive [Fruits and Vegetables Spoilage Dataset](https://www.kaggle.com/datasets/muhriddinmuxiddinov/fruits-and-vegetables-dataset):
+
 - **Total Population:** 12,000 annotated images.
 - **Botanical Distribution:** 5 Fruits (Apple, Banana, Mango, Orange, Strawberry) and 5 Vegetables (Bellpepper, Carrot, Cucumber, Potato, Tomato).
 - **Class Balance:** 6,000 Fresh samples, 6,000 Rotten samples.
@@ -141,11 +143,13 @@ The models were evaluated on the independent $N=1,800$ hold-out test set under s
 ### 4.4 Visual Diagnostics & Error Analysis
 
 #### Produce Taxonomy Diagnostics
+
 | Category Confusion Matrix | Category ROC Curves | Qualitative Error Analysis |
 | :---: | :---: | :---: |
 | ![Category Confusion Matrix](assets/category_confusion_matrix.png) | ![Category ROC Curves](assets/category_roc_curves.png) | ![Category Error Analysis](assets/category_error_analysis.png) |
 
 #### Freshness Spoilage Diagnostics
+
 | Freshness Confusion Matrix | Freshness ROC Curves | Qualitative Error Analysis |
 | :---: | :---: | :---: |
 | ![Freshness Confusion Matrix](assets/confusion_matrix.png) | ![Freshness ROC Curves](assets/roc_curves.png) | ![Freshness Error Analysis](assets/error_analysis.png) |
@@ -191,12 +195,15 @@ cp .env.example .env
 ### 6.2 Production API (FastAPI)
 
 Launch the asynchronous REST service:
+
 ```bash
 python -m uvicorn src.api.main:app --host 0.0.0.0 --port 8000 --reload
 ```
+
 Interactive OpenAPI documentation is available at: `http://localhost:8000/docs`
 
 **Inference Request:**
+
 ```bash
 curl -X POST "http://localhost:8000/predict/image" \
   -H "accept: application/json" \
@@ -207,9 +214,11 @@ curl -X POST "http://localhost:8000/predict/image" \
 ### 6.3 Interactive Dashboard (Gradio)
 
 Launch the full web application featuring upload analysis, webcam capture, and storage recommendations:
+
 ```bash
 python -m src.app.app
 ```
+
 Access the dashboard at `http://localhost:7860`.
 
 ### 6.4 Containerized Deployment (Docker)
@@ -227,10 +236,13 @@ docker run -p 7860:7860 --name freshness-app food-freshness-system:latest
 ## 7. Pipeline Training & Reproducibility
 
 To re-execute the end-to-end training and evaluation pipeline on raw data:
+
 ```bash
 python -m src.pipeline.training_pipeline
 ```
+
 This automatically runs:
+
 1. `DataIngestion`: Integrity verification and dataset schema validation.
 2. `DataTransformation`: Seeded stratified splitting and 224x224 RGB standardization.
 3. `ModelTrainer`: MobileNetV2 freshness baseline training with early stopping.
@@ -267,4 +279,3 @@ If this research or codebase contributes to your academic work, please cite:
 
 This project is licensed under the [MIT License](LICENSE).
 Trained utilizing pre-trained ImageNet representations provided by TensorFlow Applications. Dataset provided by Muhriddin Muxiddinov on Kaggle.
-
