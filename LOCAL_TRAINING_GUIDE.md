@@ -42,6 +42,7 @@ python -c "import tensorflow as tf; print('GPUs Detected:', tf.config.list_physi
 ```
 
 A properly configured environment outputs:
+
 ```text
 GPUs Detected: [PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]
 ```
@@ -141,6 +142,7 @@ python -m src.pipeline.prediction_pipeline
 ```bash
 python -m src.app.app
 ```
+
 Navigate to **`http://localhost:7860`** to test produce classification using upload or webcam input.
 
 ### 3. Launch the Production FastAPI REST API
@@ -148,4 +150,5 @@ Navigate to **`http://localhost:7860`** to test produce classification using upl
 ```bash
 python -m uvicorn src.api.main:app --reload --host 0.0.0.0 --port 8000
 ```
+
 API documentation is accessible at **`http://localhost:8000/docs`**.

@@ -257,6 +257,7 @@ This automatically runs:
 6. `CategoryModelEvaluation`: 10-class produce taxonomy test set evaluation, macro metrics, and confusion matrix generation.
 
 For complete local GPU acceleration instructions (including WSL2 CUDA setup) and cloud training:
+
 - 📖 **Local GPU Setup Guide:** [LOCAL_TRAINING_GUIDE.md](LOCAL_TRAINING_GUIDE.md)
 - 🚀 **Google Colab Notebook:** [Food_Dataset_Training.ipynb](notebooks/Food_Dataset_Training.ipynb)
 
