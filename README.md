@@ -247,7 +247,12 @@ This automatically runs:
 2. `DataTransformation`: Seeded stratified splitting and 224x224 RGB standardization.
 3. `ModelTrainer`: MobileNetV2 freshness baseline training with early stopping.
 4. `CategoryModelTrainer`: 10-class produce classifier training with adaptive learning rates.
-5. `ModelEvaluation`: Test set metrics generation, ROC curves, and misclassification error visualization.
+5. `ModelEvaluation`: Freshness classifier test set metrics generation, ROC curves, and misclassification error visualization.
+6. `CategoryModelEvaluation`: 10-class produce taxonomy test set evaluation, macro metrics, and confusion matrix generation.
+
+For complete local GPU acceleration instructions (including WSL2 CUDA setup) and cloud training:
+- 📖 **Local GPU Setup Guide:** [LOCAL_TRAINING_GUIDE.md](LOCAL_TRAINING_GUIDE.md)
+- 🚀 **Google Colab Notebook:** [Food_Dataset_Training.ipynb](notebooks/Food_Dataset_Training.ipynb)
 
 ---
 
