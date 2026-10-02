@@ -222,10 +222,11 @@ Thumbs.db
 ehthumbs.db
 Desktop.ini
 
-# Ignore large data and result artifacts
+# Ignore large data and logs
 artifacts/data/
-artifacts/results/
 artifacts/logs/
+artifacts/results/annotated_result.jpg
+
 
 # Ignore stray test images at root
 *.jpg
