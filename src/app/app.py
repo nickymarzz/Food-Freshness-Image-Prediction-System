@@ -286,4 +286,13 @@ with gr.Blocks(title="Food Freshness Prediction System") as demo:
         )
 
 if __name__ == "__main__":
-    demo.launch(server_name="0.0.0.0", server_port=7860, quiet=False, show_error=True, css=CSS, theme=gr.themes.Soft())
+    from src.config import Config
+    demo.launch(
+        server_name=Config.WEB_HOST,
+        server_port=Config.WEB_PORT,
+        quiet=False,
+        show_error=True,
+        css=CSS,
+        theme=gr.themes.Soft()
+    )
+

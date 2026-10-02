@@ -76,4 +76,6 @@ async def predict_image(image: UploadFile = File(...)) -> dict[str, Any]:
 
 
 if __name__ == "__main__":
-    uvicorn.run("src.api.main:app", host="0.0.0.0", port=8000, reload=True)
+    from src.config import Config
+    uvicorn.run("src.api.main:app", host=Config.API_HOST, port=Config.API_PORT, reload=True)
+

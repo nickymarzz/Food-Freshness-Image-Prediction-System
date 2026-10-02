@@ -148,7 +148,15 @@ Navigate to **`http://localhost:7860`** to test produce classification using upl
 ### 3. Launch the Production FastAPI REST API
 
 ```bash
-python -m uvicorn src.api.main:app --reload --host 0.0.0.0 --port 8000
+python -m uvicorn src.api.main:app --reload --host 127.0.0.1 --port 8000
 ```
 
 API documentation is accessible at **`http://localhost:8000/docs`**.
+
+> **Tip for Windows Users:** You can also launch all services directly using the convenience batch files located in the `scripts/` directory:
+> - `scripts\start_api.bat` (FastAPI at `http://localhost:8000`)
+> - `scripts\start_web.bat` (Gradio at `http://localhost:7860`)
+> - `scripts\start_web_and_api.bat` (Starts both services in parallel)
+> - `scripts\start_training.bat` (Runs the full training pipeline)
+> - `scripts\docker_setup.bat` (Builds and runs Docker on `localhost:7860`)
+

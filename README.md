@@ -200,10 +200,10 @@ cp .env.example .env
 
 ### 6.2 Production API (FastAPI)
 
-Launch the asynchronous REST service:
+Launch the asynchronous REST service on `localhost`:
 
 ```bash
-python -m uvicorn src.api.main:app --host 0.0.0.0 --port 8000 --reload
+python -m uvicorn src.api.main:app --host 127.0.0.1 --port 8000 --reload
 ```
 
 Interactive OpenAPI documentation is available at: `http://localhost:8000/docs`
@@ -219,7 +219,7 @@ curl -X POST "http://localhost:8000/predict/image" \
 
 ### 6.3 Interactive Dashboard (Gradio)
 
-Launch the full web application featuring upload analysis, webcam capture, and storage recommendations:
+Launch the full web application on `localhost` featuring upload analysis, webcam capture, and storage recommendations:
 
 ```bash
 python -m src.app.app
@@ -233,9 +233,22 @@ Access the dashboard at `http://localhost:7860`.
 # Build Docker image
 docker build -t food-freshness-system:latest .
 
-# Run containerized service
+# Run containerized service mapped to localhost:7860
 docker run -p 7860:7860 --name freshness-app food-freshness-system:latest
 ```
+
+### 6.5 Quick Launch Scripts (Windows Batch)
+
+Automated `.bat` scripts are provided in the [`scripts/`](scripts/) directory for one-click startup on `localhost`:
+
+| Script | Purpose | Localhost Endpoint |
+| :--- | :--- | :--- |
+| **[`scripts/start_api.bat`](scripts/start_api.bat)** | Launches FastAPI REST API with live reload | `http://localhost:8000` (`/docs`) |
+| **[`scripts/start_web.bat`](scripts/start_web.bat)** | Launches Gradio web interface | `http://localhost:7860` |
+| **[`scripts/start_web_and_api.bat`](scripts/start_web_and_api.bat)** | Concurrently launches both API and Web UI in separate windows | `http://localhost:7860` & `:8000` |
+| **[`scripts/start_training.bat`](scripts/start_training.bat)** | Executes the reproducible 6-stage training pipeline | Terminal execution |
+| **[`scripts/docker_setup.bat`](scripts/docker_setup.bat)** | Builds Docker image and starts container on port 7860 | `http://localhost:7860` |
+
 
 ---
 
@@ -246,8 +259,10 @@ To re-execute the end-to-end training and evaluation pipeline on raw data:
 ```bash
 python -m src.pipeline.training_pipeline
 ```
+*(Or simply execute [`scripts/start_training.bat`](scripts/start_training.bat) on Windows)*
 
 This automatically runs:
+
 
 1. `DataIngestion`: Integrity verification and dataset schema validation.
 2. `DataTransformation`: Seeded stratified splitting and 224x224 RGB standardization.

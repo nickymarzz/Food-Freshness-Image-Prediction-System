@@ -22,8 +22,10 @@ COPY . .
 # Expose the port the app runs on
 EXPOSE 7860
 
-# Define environment variable
+# Define environment variables
 ENV PYTHONUNBUFFERED=1
+ENV WEB_HOST=0.0.0.0
+
 
 # Run the application
 CMD ["python", "-m", "src.app.app"]
