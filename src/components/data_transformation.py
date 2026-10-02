@@ -27,17 +27,26 @@ class DataTransformation:
         return logger
     
 
-    def train_test_split(self, image_paths_dict, train_ratio=0.7, val_ratio=0.15, test_ratio=0.15):
+    def train_test_split(
+        self,
+        image_paths_dict: dict,
+        train_ratio: float = 0.7,
+        val_ratio: float = 0.15,
+        test_ratio: float = 0.15,
+        seed: int = 42
+    ) -> dict:
+        """Deterministic, reproducible split into train, validation, and test sets."""
+        random.seed(seed)
         splits = {'train': [], 'val': [], 'test': []}
         for cls, paths in image_paths_dict.items():
-            paths = list(paths)  
+            paths = list(paths)
             random.shuffle(paths)
             n_total = len(paths)
             n_train = int(train_ratio * n_total)
             n_val = int(val_ratio * n_total)
             splits['train'].extend([(path, cls) for path in paths[:n_train]])
-            splits['val'].extend([(path, cls) for path in paths[n_train:n_train+n_val]])
-            splits['test'].extend([(path, cls) for path in paths[n_train+n_val:]])
+            splits['val'].extend([(path, cls) for path in paths[n_train:n_train + n_val]])
+            splits['test'].extend([(path, cls) for path in paths[n_train + n_val:]])
         random.shuffle(splits['train'])
         random.shuffle(splits['val'])
         random.shuffle(splits['test'])

@@ -51,7 +51,7 @@ class CategoryModelEvaluation:
 
         save_classification_report(y_true, y_pred, class_names, self.results_dir / "category_classification_report.txt")
         save_confusion_matrix(y_true, y_pred, class_names, self.results_dir / "category_confusion_matrix.png")
-        save_roc_curve(y_true, y_pred_probs, num_classes,self.results_dir / "category_roc_curves.png")
+        save_roc_curve(y_true, y_pred_probs, num_classes, self.results_dir / "category_roc_curves.png", class_names=class_names)
         save_error_analysis(test_ds, y_true, y_pred, class_names, self.results_dir / "category_error_analysis.png")
         results_dict = {
             "stage": ["category_classifier"],

@@ -23,18 +23,22 @@ class ModelTrainer:
             logger.addHandler(ch)
         return logger
     
-    def load_data(self, img_size=(224, 224), batch_size=32):
+    def load_data(self, img_size=(224, 224), batch_size=32, seed=42):
         train_ds = tf.keras.utils.image_dataset_from_directory(
             self.processed_data_dir / "train",
             label_mode="int",
             image_size=img_size,
-            batch_size=batch_size
+            batch_size=batch_size,
+            seed=seed,
+            shuffle=True
         )
         val_ds = tf.keras.utils.image_dataset_from_directory(
             self.processed_data_dir / "val",
             label_mode="int",
             image_size=img_size,
-            batch_size=batch_size
+            batch_size=batch_size,
+            seed=seed,
+            shuffle=False
         )
         test_ds = tf.keras.utils.image_dataset_from_directory(
             self.processed_data_dir / "test",
@@ -46,13 +50,12 @@ class ModelTrainer:
         return train_ds, val_ds, test_ds
     
     def build_model(self, input_shape=(224, 224, 3), num_classes=2):
-    
         base_model = tf.keras.applications.MobileNetV2(
             weights='imagenet',
             input_shape=input_shape,
             include_top=False
         )
-        base_model.trainable = False  
+        base_model.trainable = False
 
         inputs = tf.keras.Input(shape=input_shape)
         x = base_model(inputs, training=False)
@@ -68,13 +71,18 @@ class ModelTrainer:
         return model
     
     def train(self, model, train_ds, val_ds, epochs=50):
-        
-        normalization_layer = tf.keras.layers.Rescaling(1./255)
-        train_ds = train_ds.map(lambda x, y: (normalization_layer(x), y))
-        val_ds = val_ds.map(lambda x, y: (normalization_layer(x), y))
+        normalization_layer = tf.keras.layers.Rescaling(1.0 / 255.0)
+        train_ds = train_ds.map(
+            lambda x, y: (normalization_layer(x), y),
+            num_parallel_calls=tf.data.AUTOTUNE
+        ).prefetch(buffer_size=tf.data.AUTOTUNE)
+        val_ds = val_ds.map(
+            lambda x, y: (normalization_layer(x), y),
+            num_parallel_calls=tf.data.AUTOTUNE
+        ).prefetch(buffer_size=tf.data.AUTOTUNE)
         
         early_stopping = EarlyStopping(
-            monitor='val_loss',    
+            monitor='val_loss',
             patience=5,
             restore_best_weights=True
         )
@@ -83,19 +91,19 @@ class ModelTrainer:
             train_ds,
             validation_data=val_ds,
             epochs=epochs,
-            callbacks=[early_stopping]  
+            callbacks=[early_stopping]
         )
     
         return history
     
     def save_model(self, model, filename="mobilenetv2_baseline.keras"):
-        save_path = Path(Config.MODEL_DIR) / filename
+        save_path = Path(self.config.MODEL_DIR) / filename
         save_path.parent.mkdir(parents=True, exist_ok=True)
         model.save(save_path)
         self.logger.info(f"Model saved to {save_path}")
 
     def save_metrics(self, history, filename="baseline_history.json"):
-        save_path = Path(Config.MODEL_DIR) / filename
+        save_path = Path(self.config.MODEL_DIR) / filename
         save_path.parent.mkdir(parents=True, exist_ok=True)
         metrics = {k: [float(v) for v in vals] for k, vals in history.history.items()}
         with open(save_path, "w") as f:

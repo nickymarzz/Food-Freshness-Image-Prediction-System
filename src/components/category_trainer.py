@@ -33,22 +33,21 @@ class CategoryModelTrainer:
         except Exception:
             pass
 
-    def get_category_image_dir(self, train_split=0.7, val_split=0.15, test_split=0.15):
-       
-        base_output = Path(Config.DATA_DIR) / "category"
+    def get_category_image_dir(self, train_split=0.7, val_split=0.15, test_split=0.15, seed=42):
+        base_output = Path(self.config.DATA_DIR) / "category"
         train_dir = base_output / "train"
         val_dir = base_output / "val"
         test_dir = base_output / "test"
 
-        
         for d in [train_dir, val_dir, test_dir]:
             d.mkdir(parents=True, exist_ok=True)
 
-     
         category_mapping = {
-            "Fruits": Config.FRUIT_NAMES,
-            "Vegetables": Config.VEGETABLE_NAMES,
+            "Fruits": self.config.FRUIT_NAMES,
+            "Vegetables": self.config.VEGETABLE_NAMES,
         }
+
+        random.seed(seed)
 
         for main_cat, categories in category_mapping.items():
             base = self.raw_data_dir / main_cat
@@ -62,7 +61,6 @@ class CategoryModelTrainer:
                     self.logger.warning(f"Category not found: {src_cat}")
                     continue
 
-               
                 all_images = []
                 for freshness in ["Fresh", "Rotten"]:
                     src_folder = src_cat / freshness
@@ -74,7 +72,6 @@ class CategoryModelTrainer:
                     self.logger.warning(f"No images found for category: {category}")
                     continue
 
-              
                 random.shuffle(all_images)
                 total = len(all_images)
                 train_end = int(total * train_split)
@@ -86,7 +83,6 @@ class CategoryModelTrainer:
                     test_dir / category: all_images[val_end:]
                 }
 
-             
                 for dst_cat, img_list in splits.items():
                     dst_cat.mkdir(parents=True, exist_ok=True)
                     for imgfile in img_list:
@@ -102,14 +98,16 @@ class CategoryModelTrainer:
         self.logger.info("Dataset split completed into train/val/test folders.")
         return train_dir, val_dir, test_dir
 
-    def load_data(self, img_size=(224, 224), batch_size=32):
-        train_dir, val_dir, test_dir = self.get_category_image_dir()
+    def load_data(self, img_size=(224, 224), batch_size=32, seed=42):
+        train_dir, val_dir, test_dir = self.get_category_image_dir(seed=seed)
 
         train_ds = tf.keras.utils.image_dataset_from_directory(
             train_dir,
             label_mode="int",
             image_size=img_size,
             batch_size=batch_size,
+            seed=seed,
+            shuffle=True
         )
 
         val_ds = tf.keras.utils.image_dataset_from_directory(
@@ -117,6 +115,8 @@ class CategoryModelTrainer:
             label_mode="int",
             image_size=img_size,
             batch_size=batch_size,
+            seed=seed,
+            shuffle=False
         )
 
         test_ds = tf.keras.utils.image_dataset_from_directory(
@@ -124,6 +124,7 @@ class CategoryModelTrainer:
             label_mode="int",
             image_size=img_size,
             batch_size=batch_size,
+            shuffle=False
         )
 
         return train_ds, val_ds, test_ds
@@ -153,17 +154,21 @@ class CategoryModelTrainer:
         return model
 
     def train(self, model, train_ds, val_ds, epochs=30):
-        normalization_layer = tf.keras.layers.Rescaling(1./255)
-        train_ds = train_ds.map(lambda x, y: (normalization_layer(x), y))
-        val_ds = val_ds.map(lambda x, y: (normalization_layer(x), y))
-
+        normalization_layer = tf.keras.layers.Rescaling(1.0 / 255.0)
+        train_ds = train_ds.map(
+            lambda x, y: (normalization_layer(x), y),
+            num_parallel_calls=tf.data.AUTOTUNE
+        ).prefetch(buffer_size=tf.data.AUTOTUNE)
+        val_ds = val_ds.map(
+            lambda x, y: (normalization_layer(x), y),
+            num_parallel_calls=tf.data.AUTOTUNE
+        ).prefetch(buffer_size=tf.data.AUTOTUNE)
 
         early_stopping = EarlyStopping(
             monitor='val_loss',
             patience=5,
             restore_best_weights=True
         )
-        
 
         reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.8, patience=2, verbose=1, min_lr=1e-5)
 
@@ -176,13 +181,13 @@ class CategoryModelTrainer:
         return history
 
     def save_model(self, model, filename="category_classifier.keras"):
-        save_path = Path(Config.MODEL_DIR) / filename
+        save_path = Path(self.config.MODEL_DIR) / filename
         save_path.parent.mkdir(parents=True, exist_ok=True)  
         model.save(save_path)
         self.logger.info(f"Model saved to {save_path.resolve()}")
 
     def save_metrics(self, history, filename="category_history.json"):
-        save_path = Path(Config.MODEL_DIR) / filename
+        save_path = Path(self.config.MODEL_DIR) / filename
         save_path.parent.mkdir(parents=True, exist_ok=True)
         metrics = {k: [float(v) for v in vals] for k, vals in history.history.items()}
         with open(save_path, "w") as f:
@@ -190,7 +195,7 @@ class CategoryModelTrainer:
         self.logger.info(f"Training metrics saved to {save_path.resolve()}")
 
     def save_labels(self, class_names, filename="category_labels.json"):
-        save_path = Path(Config.MODEL_DIR) / filename
+        save_path = Path(self.config.MODEL_DIR) / filename
         save_path.parent.mkdir(parents=True, exist_ok=True)
         with open(save_path, "w") as f:
             json.dump(class_names, f, indent=4)

@@ -53,7 +53,7 @@ class ModelEvaluation:
      
         save_classification_report(y_true, y_pred, class_names, self.results_dir / "classification_report.txt")
         save_confusion_matrix(y_true, y_pred, class_names, self.results_dir / "confusion_matrix.png")
-        save_roc_curve(y_true, y_pred_probs, num_classes, self.results_dir / "roc_curves.png")
+        save_roc_curve(y_true, y_pred_probs, num_classes, self.results_dir / "roc_curves.png", class_names=class_names)
         save_error_analysis(test_ds, y_true, y_pred, class_names, self.results_dir / "error_analysis.png")
         results_dict = {
             "stage": ["baseline"],

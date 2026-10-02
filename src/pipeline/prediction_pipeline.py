@@ -44,13 +44,13 @@ class PredictionPipeline:
 
     def predict(self, img):
         cat_img_array, pil_img = self._preprocess_image(img, CATEGORY_IMG_SIZE, normalize=True)
-        cat_pred = self.category_model.predict(cat_img_array)
+        cat_pred = self.category_model.predict(cat_img_array, verbose=0)
         cat_idx = int(np.argmax(cat_pred))
         cat_label = self.category_labels[cat_idx]
         cat_score = float(np.max(cat_pred))
 
         fresh_img_array, _ = self._preprocess_image(img, FRESHNESS_IMG_SIZE, normalize=True)
-        fresh_pred = self.freshness_model.predict(fresh_img_array)
+        fresh_pred = self.freshness_model.predict(fresh_img_array, verbose=0)
         fresh_idx = int(np.argmax(fresh_pred))
         fresh_label = self.freshness_labels[fresh_idx]
         fresh_score = float(np.max(fresh_pred))
@@ -78,19 +78,31 @@ class PredictionPipeline:
             font = ImageFont.truetype("arial.ttf", font_size)
         except Exception:
             font = ImageFont.load_default()
-        draw.rectangle([0, 0, pil_img.width, font_size+8], fill=(0,0,0,160))
+        draw.rectangle([0, 0, pil_img.width, font_size + 8], fill=(0, 0, 0, 160))
         draw.text((5, 2), text, fill=(255, 255, 255), font=font)
         return pil_img
 
 if __name__ == "__main__":
     pipeline = PredictionPipeline()
 
-    img_path = r"artifacts\data\category\test\Apple\rottenApple (175).jpg"
+    sample_candidates = [
+        Path("assets") / "annotated_result.jpg",
+        Path(Config.RESULTS_DIR) / "test_sample.jpg",
+        Path(Config.DATA_DIR) / "category" / "test" / "Apple" / "rottenApple (175).jpg"
+    ]
+    test_img = next((p for p in sample_candidates if p.exists()), None)
     
-    result = pipeline.predict(img_path)
-    
-    print("Prediction:", result["category"], "|", result["freshness"])
+    if test_img:
+        print(f"Testing inference pipeline on: {test_img}")
+        result = pipeline.predict(test_img)
+        print("Category Prediction :", result["category"])
+        print("Freshness Prediction:", result["freshness"])
 
-    annotated_img = pipeline.annotate(img_path, result)
-
-    annotated_img.save(r"artifacts\results\annotated_result.jpg")
+        results_dir = Path(Config.RESULTS_DIR)
+        results_dir.mkdir(parents=True, exist_ok=True)
+        out_path = results_dir / "annotated_result.jpg"
+        annotated_img = pipeline.annotate(test_img, result)
+        annotated_img.save(out_path)
+        print(f"Annotated result saved successfully to: {out_path}")
+    else:
+        print("PredictionPipeline initialized successfully. No local test image found.")
