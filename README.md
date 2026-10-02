@@ -50,7 +50,7 @@ By decomposing the problem into specialized, modular transfer learning heads usi
 
 The end-to-end framework implements clean MLOps architectural principles, separating ingestion, feature extraction, dual-model inference, presentation, and data audit storage.
 
-```
+```text
                     ┌────────────────────────┐
                     │ Raw Produce Input Image│
                     │ (Upload / Live Webcam) │
