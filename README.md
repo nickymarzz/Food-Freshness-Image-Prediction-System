@@ -111,32 +111,32 @@ The models were evaluated on the independent $N=1,800$ hold-out test set under s
 
 | Architecture | Parameters | Test Accuracy | Test Loss | Precision | Recall | Macro F1 |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **MobileNetV2 (Proposed)** | **2.26M** | **95.00%** | **0.1499** | **0.950** | **0.950** | **0.950** |
+| **MobileNetV2 (Proposed)** | **2.26M** | **95.28%** | **0.1199** | **0.953** | **0.953** | **0.953** |
 
-- **Fresh Class:** Precision = 0.95, Recall = 0.95, F1 = 0.95 ($N=917$)
-- **Rotten Class:** Precision = 0.95, Recall = 0.95, F1 = 0.95 ($N=883$)
+- **Fresh Class:** Precision = 0.953, Recall = 0.954, F1 = 0.954 ($N=917$)
+- **Rotten Class:** Precision = 0.952, Recall = 0.951, F1 = 0.952 ($N=883$)
 
 ### 4.2 Quantitative 10-Class Produce Taxonomy
 
 | Architecture | Top-1 Accuracy | Test Loss | Macro Precision | Macro Recall | Macro F1 |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **MobileNetV2 Classifier** | **96.70%** | **0.1086** | **0.967** | **0.967** | **0.967** |
+| **MobileNetV2 Classifier** | **97.09%** | **0.1094** | **0.971** | **0.971** | **0.971** |
 
 ### 4.3 Per-Class Performance Breakdown
 
 | Produce Category | Test Samples ($N$) | Precision | Recall | F1-Score | Status |
 | :--- | :---: | :---: | :---: | :---: | :--- |
-| **Strawberry** | 177 | 0.99 | 1.00 | **1.00** | Exceptional |
-| **Banana** | 179 | 0.98 | 0.99 | **0.99** | Exceptional |
-| **Tomato** | 179 | 0.99 | 0.97 | **0.98** | High Precision |
-| **Carrot** | 179 | 0.94 | 1.00 | **0.97** | Perfect Recall |
-| **Cucumber** | 175 | 0.97 | 0.97 | **0.97** | Balanced |
-| **Orange** | 180 | 0.97 | 0.97 | **0.97** | Balanced |
-| **Bellpepper** | 181 | 0.96 | 0.96 | **0.96** | Balanced |
-| **Mango** | 179 | 0.97 | 0.96 | **0.96** | Robust |
-| **Potato** | 180 | 0.95 | 0.94 | **0.94** | Robust |
-| **Apple** | 180 | 0.95 | 0.93 | **0.94** | Robust |
-| **Overall Macro Avg** | **1,789** | **0.97** | **0.97** | **0.97** | **Publication Grade** |
+| **Strawberry** | 177 | 0.983 | 1.000 | **0.992** | Exceptional |
+| **Carrot** | 179 | 0.978 | 1.000 | **0.989** | Perfect Recall |
+| **Banana** | 179 | 0.983 | 0.989 | **0.986** | Exceptional |
+| **Tomato** | 179 | 0.972 | 0.983 | **0.978** | Robust |
+| **Mango** | 179 | 0.983 | 0.972 | **0.978** | Robust |
+| **Cucumber** | 175 | 0.966 | 0.971 | **0.969** | Balanced |
+| **Orange** | 180 | 0.957 | 0.978 | **0.967** | Balanced |
+| **Bellpepper** | 181 | 0.977 | 0.934 | **0.955** | Robust |
+| **Apple** | 180 | 0.936 | 0.972 | **0.954** | High Recall |
+| **Potato** | 180 | 0.976 | 0.911 | **0.943** | High Precision |
+| **Overall Macro Avg** | **1,789** | **0.971** | **0.971** | **0.971** | **Publication Grade** |
 
 ---
 

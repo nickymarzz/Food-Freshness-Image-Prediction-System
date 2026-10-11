@@ -1,16 +1,16 @@
               precision    recall  f1-score   support
 
-       Apple       0.95      0.93      0.94       180
-      Banana       0.98      0.99      0.99       179
-  Bellpepper       0.96      0.96      0.96       181
-      Carrot       0.94      1.00      0.97       179
-    Cucumber       0.97      0.97      0.97       175
-       Mango       0.97      0.96      0.96       179
-      Orange       0.97      0.97      0.97       180
-      Potato       0.95      0.94      0.94       180
-  Strawberry       0.99      1.00      1.00       177
-      Tomato       0.99      0.97      0.98       179
+       Apple     0.9358    0.9722    0.9537       180
+      Banana     0.9833    0.9888    0.9861       179
+  Bellpepper     0.9769    0.9337    0.9548       181
+      Carrot     0.9781    1.0000    0.9890       179
+    Cucumber     0.9659    0.9714    0.9687       175
+       Mango     0.9831    0.9721    0.9775       179
+      Orange     0.9565    0.9778    0.9670       180
+      Potato     0.9762    0.9111    0.9425       180
+  Strawberry     0.9833    1.0000    0.9916       177
+      Tomato     0.9724    0.9832    0.9778       179
 
-    accuracy                           0.97      1789
-   macro avg       0.97      0.97      0.97      1789
-weighted avg       0.97      0.97      0.97      1789
+    accuracy                         0.9709      1789
+   macro avg     0.9712    0.9710    0.9709      1789
+weighted avg     0.9711    0.9709    0.9708      1789
